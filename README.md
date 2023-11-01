@@ -9,11 +9,6 @@
 
 <br />
 
-<!-- <div align="center">
-  <img src="./public/assets/home-page.png" alt="Logo" width="100%" height="100%">
-  <p align="center">Home Page</p>
-</div> -->
-
 # Deploy Netflix Clone on Cloud using Jenkins - DevSecOps Project!
 
 ### **Phase 1: Initial Setup and Deployment**
@@ -325,20 +320,20 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
                        sh "docker build --build-arg TMDB_V3_API_KEY=<yourapikey> -t netflix ."
-                       sh "docker tag netflix nasi101/netflix:latest "
-                       sh "docker push nasi101/netflix:latest "
+                       sh "docker tag netflix sarad3993/netflix:latest "
+                       sh "docker push sarad3993/netflix:latest "
                     }
                 }
             }
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image nasi101/netflix:latest > trivyimage.txt" 
+                sh "trivy image sarad3993/netflix:latest > trivyimage.txt" 
             }
         }
         stage('Deploy to container'){
             steps{
-                sh 'docker run -d --name netflix -p 8081:80 nasi101/netflix:latest'
+                sh 'docker run -d -p 8081:80 sarad3993/netflix:latest'
             }
         }
     }
@@ -712,7 +707,7 @@ Update your Prometheus configuration (prometheus.yml) to add a new job for scrap
 
 
 ```
-  - job_name: 'Netflix'
+  - job_name: 'k8s'
     metrics_path: '/metrics'
     static_configs:
       - targets: ['node1Ip:9100']
